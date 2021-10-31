@@ -1,11 +1,11 @@
 load("u50.mat");
-i50 = i-1;
+i50 = i;
 u50 = measurements;
 load("u75.mat");
-i75 = i-1;
+i75 = i;
 u75 = measurements;
 load("u100.mat");
-i100 = i-1;
+i100 = i;
 u100 = measurements;
 plot([u50,u75,u100]);
 grid on
