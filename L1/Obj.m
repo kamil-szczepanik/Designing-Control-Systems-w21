@@ -13,13 +13,13 @@ classdef Obj < handle
             obj.b = b(:);
             obj.c = c(:);
             obj.U = zeros(1,size(obj.a,1));
-            obj.Y = ones(1,size(obj.b,1));
+            obj.Y = zeros(1,size(obj.b,1)) * obj.c;
         end
         function y = step(o, u)
             y = o.U*o.a + o.Y*o.b;
             o.U = [u, o.U(1:end-1)];
             o.Y = [y, o.Y(1:end-1)];
-            y = y + o.c;
+%             y = y + o.c;
         end
         function y = subsref(o,u)
             y = o.step(u.subs{:});
