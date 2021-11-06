@@ -33,10 +33,10 @@ classdef PID < handle
                     o.K*((AW * o.T/(2.0*o.Ti))-(2.0*o.Td/o.T)-1.0)
                     o.K*(1.0+(AW * o.T/(2.0*o.Ti))+o.Td/o.T)
                 ];
-            o.MV = o.E*R + o.MV;
-            o.MV = min(max(o.MV_MIN,o.MV),o.MV);
-%             o.dU(1) = min(o.dU(1), o.MV_MAX - o.MV); 
-%             o.dU(1) = max(o.dU(1), o.MV_MIN - o.MV); 
+            dMV = o.E*R;
+            dMV = min(max(dMV, o.dMV_MIN),o.dMV_MAX); 
+            o.MV = dMV + o.MV;
+            o.MV = min(max(o.MV_MIN,o.MV),o.MV_MAX);
             MV = o.MV;
         end
         function MV = subsref(o,e)
