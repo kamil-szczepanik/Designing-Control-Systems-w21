@@ -1,4 +1,7 @@
 function obj = double_inertial(K,Td,T1,T2,Y0)
+    if nargin < 5
+        Y0 = 0;
+    end
     alfa1 = exp(-1/T1);
     alfa2 = exp(-1/T2);
     a1 = -alfa1 - alfa2;

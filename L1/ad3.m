@@ -4,29 +4,35 @@ global S Td
 load("u75.mat");
 S = measurements;
 S = (S(1:i)-S(1))/(75 - 25);
-% options = optimoptions(@ga,'MaxGenerations',1000,'MaxStallGenerations',200,'PopulationSize', 300);
-% T = ga(@f,4,[],[],[],[],[0,0,0,0.2],[100,100,8,0.4],[],3,options);
 T = zeros(10,3);
+params = zeros(10,3);
 loss = zeros(10,1);
 for k = 0:1:9
     Td = k;
     options = optimoptions(@fminunc,'MaxIterations',1000,'MaxFunctionEvaluations',2000);
-    [T(k+1,:),loss(k+1)] = fminunc(@f,[80,40,0.3],options);
+    [params(k+1,:),loss(k+1)] = fminunc(@f,[80,40,0.3],options);
 end
 [~,ind] = min(loss);
-T = T(ind,:);
+params = params(ind,:);
 Td = ind-1;
-obj = double_inertial(T(3),Td,T(1),T(2));
+T1 = params(1);
+T2 = params(2);
+K = params(3);
+obj = double_inertial(K,Td,T1,T2);
 [~, ~,y] = systemSim(@(y,y_zad)1, obj, 1, 1, i);
 disp(norm(S-y));
+
 hold on
 stairs(S);
 stairs(y);
 hold off
-function loss = f(T)
+function loss = f(params)
     global S Td
     i = 317;
-	obj = double_inertial(T(3),Td,T(1),T(2));
+    T1 = params(1);
+    T2 = params(2);
+    K = params(3);
+	obj = double_inertial(K,Td,T1,T2);
     [~, ~,y] = systemSim(@(y,y_zad)1, obj, 1, 1, i);
     loss = norm(S-y);
 end
