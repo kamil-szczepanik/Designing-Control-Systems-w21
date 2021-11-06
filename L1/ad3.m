@@ -19,13 +19,14 @@ T1 = params(1);
 T2 = params(2);
 K = params(3);
 obj = double_inertial(K,Td,T1,T2);
-[~, ~,y] = systemSim(@(y,y_zad)1, obj, 1, 1, i);
-disp(norm(S-y));
+[~, ~,Sm] = systemSim(@(y,y_zad)1, obj, 1, 1, i);
+disp(norm(S-Sm));
 
 hold on
 stairs(S);
-stairs(y);
+stairs(Sm);
 hold off
+save("model", "Sm", "K", "T1", "T2", "Td");
 function loss = f(params)
     global S Td
     i = 317;
