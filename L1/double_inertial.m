@@ -1,4 +1,4 @@
-function obj = double_inertial(K,Td,T1,T2)
+function obj = double_inertial(K,Td,T1,T2,Y0)
     alfa1 = exp(-1/T1);
     alfa2 = exp(-1/T2);
     a1 = -alfa1 - alfa2;
@@ -9,5 +9,5 @@ function obj = double_inertial(K,Td,T1,T2)
     b(Td+1) = b1;
     b(Td+2) = b2;
     a = [-a1;-a2];
-    obj = Obj(b,a);    
+    obj = Obj(b,a,Y0);    
 end

@@ -26,6 +26,8 @@ classdef DMC < handle
             M = toeplitz(s(min(1:N, size(s,1))), [s(1), zeros(1,Nu - 1)]);
             obj.Mp = hankel(s(min(2:N+1, size(s,1))), s(min(N + (1:D-1),size(s,1)))) - s(1:end-1)';
             obj.K = (M' * M + diag(zeros(Nu,1) + lambda))\M';
+            obj.K = lsqminnorm(M' * M + diag(zeros(Nu,1) + lambda),M');
+%              lsqminnorm(A,B)
             obj.K = obj.K(1,:); %Nie potrzebujemmy reszty wierszy
             obj.MV_MIN = MV_MIN;
             obj.MV_MAX = MV_MAX;
@@ -43,9 +45,9 @@ classdef DMC < handle
             
             o.MV = o.dU(1) + o.MV;
             MV = o.MV;
-        end
+        end 
         function MV = subsref(o,e)
-            MV = o.step(e);
+            MV = o.step(e.subs{:});
         end
     end
 end

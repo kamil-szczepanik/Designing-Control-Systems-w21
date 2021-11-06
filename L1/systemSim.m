@@ -11,8 +11,8 @@ function [t, u,y] = systemSim(controller, object, y_zad, Tp, Tfinal)
     
     y(1) = object(0);
     for k = 1:1:size(t,1)-1;
-        u(k) = controller(y_zad(k),y(k));
+        u(k) = controller(y_zad(k) - y(k));
         y(k+1) = object(u(k));
     end    
-    u(end) = controller(y_zad(end),y(end));
+    u(end) = controller(y_zad(end) - y(end));
 end
