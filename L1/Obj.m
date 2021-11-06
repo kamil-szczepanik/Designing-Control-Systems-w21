@@ -19,7 +19,7 @@ classdef Obj < handle
             y = o.U*o.a + o.Y*o.b;
             o.U = [u, o.U(1:end-1)];
             o.Y = [y, o.Y(1:end-1)];
-%             y = y + o.c;
+            y = y + o.c;
         end
         function y = subsref(o,u)
             y = o.step(u.subs{:});
