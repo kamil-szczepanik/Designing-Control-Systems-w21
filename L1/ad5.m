@@ -1,4 +1,5 @@
 close;
+clear;
 load("model.mat");
 lambda = 0.001;
 N = 300;
