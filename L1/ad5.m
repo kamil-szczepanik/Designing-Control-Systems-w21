@@ -29,6 +29,8 @@ y_zad = ones(10*i,1);
 y_zad(1:5*i,:) = 45;
 y_zad(5*i:10*i,:) = 35;
 [~, u,y] = systemSim(controller, obj, y_zad, 1, 10*i);
+
+err = norm(y_zad-y)
 figure(2)
 stairs(u);
 figure(1)
