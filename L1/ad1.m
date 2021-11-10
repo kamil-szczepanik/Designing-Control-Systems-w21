@@ -9,8 +9,8 @@ while(1)
     %% processing of the measurements and new control values calculation
 
     %% sending new values of control signals
-    sendControls([1, 5], ... send for these elements
-                 [50, 25]);  % new corresponding control values
+    sendControls([1,3, 5], ... send for these elements
+                 [50,00, 0]);  % new corresponding control values
 
     %% synchronising with the control process
     waitForNewIteration(); % wait for new batch of measurements to be ready
