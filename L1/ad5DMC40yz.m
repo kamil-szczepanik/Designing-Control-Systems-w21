@@ -15,10 +15,10 @@ lambda = 0.01;
 N = 25;
 Nu = 1;
 controller =  DMC(Sm(1:301), lambda, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
-y_zad = ones(640,1);
+y_zad = ones(300,1);
 y_zad(:,:) = 25;
-y_zad(60:end,:) = 50;
-y_zad(400:end,:) = 30;
+y_zad(60:end,:) = 40;
+% y_zad(400:end,:) = 30;
 [~, u,y] = systemSim(controller, @real_obj, y_zad, 1, size(y_zad,1));
 
 err = norm(y_zad-y)
