@@ -1,24 +1,19 @@
 close;
 clear;
-load("PID_SIM.mat");
+load("data/DMC_SIM.mat");
+load("data/model.mat");
 
 addpath('D:\SerialCommunication'); % add a path to the functions
 initSerialControl COM10 % initialise com port
+controller =  DMC(Sm(1:301), lambda, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
 
-MV_MIN = 0;
-MV_MAX = 100;
-dMV_MIN = -10;
-dMV_MAX = +10;
-T = 1;
-controller =  PID(K_pid, Ti_pid, 12, T, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
-
-y_zad = ones(640,1);
+y_zad = ones(300,1);
 y_zad(:,:) = 25;
-y_zad(60:end,:) = 50;
-y_zad(400:end,:) = 30;
+y_zad(60:end,:) = 40;
 [~, u,y] = systemSim(controller, @real_obj, y_zad, 1, size(y_zad,1));
+err = norm(y_zad-y);
+disp(err);
 
-err = norm(y_zad-y)
 figure(1)
 hold on
 stairs(y);

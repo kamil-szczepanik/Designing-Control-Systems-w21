@@ -1,7 +1,7 @@
 close
 clear
 global S Td
-load("u75.mat");
+load("data/u75.mat");
 S = u75;
 S = (S(1:i75)-S(1))/(75 - 25);
 params = zeros(10,3);
@@ -29,7 +29,7 @@ stairs(S);
 stairs(Sm);
 hold off
 
-save("model", "Sm", "K", "T1", "T2", "Td");
+save("data/model.mat", "Sm", "K", "T1", "T2", "Td");
 function loss = f(params)
     global S Td
     i = 317;

@@ -1,7 +1,7 @@
-load("u25.mat");
-load("u50.mat");
-load("u75.mat");
-load("u100.mat");
+load("data/u25.mat");
+load("data/u50.mat");
+load("data/u75.mat");
+load("data/u100.mat");
 
 figure(1)
 plot([u50,u75,u100]);
