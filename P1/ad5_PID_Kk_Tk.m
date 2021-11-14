@@ -1,7 +1,6 @@
 clear;
 close all;
-load("model.mat");
-load("PID_zn.mat");
+load("PID_ad5.mat");
 SIM_LENGHT = 10000;
 MV_MIN = 0.9;
 MV_MAX = 1.5;
