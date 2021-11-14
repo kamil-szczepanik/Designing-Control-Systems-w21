@@ -20,9 +20,11 @@ y_zad(800:1000) = 2;
 
 controller = PID(K, Ti, Td, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
 obj = Obj_15Y_p1();
-[~, ~,y] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
+[~, u,y] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
 
 fprintf("Wynik optymalizacji:\n\tK: %0.3f\n\tTi: %0.3f\n\tTd: %0.3f\n\tloss: %0.4f\n", K, Ti, Td, norm(y_zad-y));
+figure()
+stairs(u)
 figure()
 hold on
 stairs(y_zad)
@@ -43,5 +45,5 @@ function loss = f(params)
     controller = PID(K, Ti, Td, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
     obj = Obj_15Y_p1();
     [~, ~,y] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
-    loss = norm(y_zad(200:end)-y(200:end));
+    loss = norm(y_zad-y);
 end

@@ -1,47 +1,80 @@
 clear;
 close all;
-global MV_MIN MV_MAX dMV_MIN dMV_MAX;
-load("PID_ad5.mat");
-
-options = optimoptions(@fminunc,'MaxIterations',100,'MaxFunctionEvaluations',200);
-[params,loss] = fminunc(@f,[K_pid, Ti_pid, Td_pid],options);
-%  options = optimoptions(@ga,'MaxGenerations',800,'MaxStallGenerations',100,'PopulationSize', 100);
-% params = ga(@f,3,options);
-
-K = params(1);
-Ti = params(2);
-Td = params(3);
-
+global MV_MIN MV_MAX dMV_MIN dMV_MAX D N Nu s;
+load("DMC_ad5.mat");
+load("model.mat");
 SIM_LENGHT = 500;
 y_zad = zeros(SIM_LENGHT*2,1);
 y_zad(200:SIM_LENGHT*2) = 1.5;
 y_zad(500:800) = 2.5;
-y_zad(800:1000) = 2;
+y_zad(800:1000) = 2; 
+lambda = 0.1;
+N = size(s,1);
+Nu = N;
 
-controller = PID(K, Ti, Td, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+D = 125;
+controller = DMC(s(1:D+1), lambda, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
 obj = Obj_15Y_p1();
 [~, ~,y] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
+loss = norm(y_zad - y);
 
-fprintf("Wynik optymalizacji:\n\tK: %0.3f\n\tTi: %0.3f\n\tTd: %0.3f\n\tloss: %0.4f\n", K, Ti, Td, norm(y_zad-y));
+% N
+N_vec = NaN(D,1);
+N = D;
+tol = 0.0001;
+loss_max = loss + tol;
+while loss <= loss_max
+    N = N - 1; 
+    controller = DMC(s(1:D+1), lambda, N, N, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+    obj = Obj_15Y_p1();
+    [~, ~,y] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
+    loss = norm(y_zad - y);
+    N_vec(N) = loss;
+end
+N = N + 1;
+figure()
+plot(N_vec)
+
+% Nu
+Nu_vec = NaN(N,1);
+Nu = N;
+tol = 0.0001;
+loss = N_vec(N);
+loss_max = loss + tol;
+while loss <= loss_max
+    Nu = Nu - 1; 
+    controller = DMC(s(1:D+1), lambda, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+    obj = Obj_15Y_p1();
+    [~, ~,y] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
+    loss = norm(y_zad - y);
+    Nu_vec(Nu) = loss;
+end
+Nu = Nu + 1;
+figure()
+plot(Nu_vec)
+
+
+
+options = optimoptions(@fminunc,'MaxIterations',100,'MaxFunctionEvaluations',200);
+[lambda,loss] = fminunc(@f,0.1,options);
+
 figure()
 hold on
 stairs(y_zad)
 stairs(y)
 hold off
 
-function loss = f(params)
-    global MV_MIN MV_MAX dMV_MIN dMV_MAX;
-    K = params(1);
-    Ti = params(2);
-    Td = params(3);
+
+function loss = f(lambda)
+    global MV_MIN MV_MAX dMV_MIN dMV_MAX N Nu D s;
     SIM_LENGHT = 500;
     y_zad = zeros(SIM_LENGHT*2,1);
     y_zad(200:SIM_LENGHT*2) = 1.5;
     y_zad(500:800) = 2.5;
     y_zad(800:1000) = 2;
     
-    controller = PID(K, Ti, Td, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+    controller = DMC(s(1:D+1), lambda, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
     obj = Obj_15Y_p1();
     [~, ~,y] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
-    loss = norm(y_zad(200:end)-y(200:end));
+    loss = norm(y_zad-y);
 end

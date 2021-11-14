@@ -43,6 +43,8 @@ stairs(y_zad)
 stairs(Y_pid_tl)
 hold off
 figure()
+stairs(U_pid_man)
+figure()
 hold on
 stairs(y_zad)
 stairs(Y_pid_man)
