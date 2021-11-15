@@ -60,9 +60,15 @@ options = optimoptions(@fminunc,'MaxIterations',100,'MaxFunctionEvaluations',200
 
 figure()
 hold on
-stairs(y_zad)
-stairs(y)
+y_zad_fig = stairs(y_zad)
+y_fig = stairs(y)
 hold off
+
+figs = [y_zad_fig y_fig];
+fig_names = ["y_zad","y"];
+for i = 1:size(figs,2)
+    writematrix([figs(i).XData; figs(i).YData]', "p1_zadanie6_DMC"+fig_names(i)+".txt", 'Delimiter','tab')
+end
 
 
 function loss = f(lambda)
