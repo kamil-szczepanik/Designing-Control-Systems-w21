@@ -60,9 +60,11 @@ options = optimoptions(@fminunc,'MaxIterations',100,'MaxFunctionEvaluations',200
 
 figure()
 hold on
-y_zad_fig = stairs(y_zad)
-y_fig = stairs(y)
+y_zad_fig = stairs(y_zad);
+y_fig = stairs(y);
 hold off
+
+fprintf("Wynik optymalizacji:\n\tN: %0.3f\n\tNu: %0.3f\n\tN: %0.3f\n\tloss: %0.4f\n", N, Nu, D, norm(y_zad(200:end)-y(200:end)));
 
 figs = [y_zad_fig y_fig];
 fig_names = ["y_zad","y"];
