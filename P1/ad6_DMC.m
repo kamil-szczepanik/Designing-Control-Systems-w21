@@ -45,7 +45,7 @@ while loss <= loss_max
     Nu = Nu - 1; 
     controller = DMC(s(1:D+1), lambda, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
     obj = Obj_15Y_p1();
-    [~, ~,y] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
+    [~, u,y] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
     loss = norm(y_zad - y);
     Nu_vec(Nu) = loss;
 end
@@ -59,15 +59,17 @@ options = optimoptions(@fminunc,'MaxIterations',100,'MaxFunctionEvaluations',200
 [lambda,loss] = fminunc(@f,0.1,options);
 
 figure()
+u_fig = stairs(u)
+figure()
 hold on
-y_zad_fig = stairs(y_zad);
-y_fig = stairs(y);
+y_zad_fig = stairs(y_zad)
+y_fig = stairs(y)
 hold off
 
-fprintf("Wynik optymalizacji:\n\tN: %0.3f\n\tNu: %0.3f\n\tN: %0.3f\n\tloss: %0.4f\n", N, Nu, D, norm(y_zad(200:end)-y(200:end)));
+fprintf("Wynik optymalizacji:\n\tN: %0.3f\n\tNu: %0.3f\n\tN: %0.3f\n\tlambda: %0.3f\n\tloss: %0.4f\n", N, Nu, D,lambda, norm(y_zad(200:end)-y(200:end)));
 
-figs = [y_zad_fig y_fig];
-fig_names = ["y_zad","y"];
+figs = [u_fig, y_zad_fig y_fig];
+fig_names = ["u" "y_zad" "y"];
 for i = 1:size(figs,2)
     writematrix([figs(i).XData; figs(i).YData]', "p1_zadanie6_DMC"+fig_names(i)+".txt", 'Delimiter','tab')
 end
