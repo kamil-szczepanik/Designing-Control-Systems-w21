@@ -24,11 +24,11 @@ obj = Obj_15Y_p1();
 
 fprintf("Wynik optymalizacji:\n\tK: %0.3f\n\tTi: %0.3f\n\tTd: %0.3f\n\tloss: %0.4f\n", K, Ti, Td, norm(y_zad(200:end)-y(200:end)));
 figure()
-u_fig = stairs(u)
+u_fig = stairs(u);
 figure()
 hold on
-y_zad_fig = stairs(y_zad)
-y_fig = stairs(y)
+y_zad_fig = stairs(y_zad);
+y_fig = stairs(y);
 hold off
 
 figs = [u_fig y_zad_fig y_fig];
