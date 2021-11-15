@@ -33,7 +33,7 @@ hold off
 
 figs = [u_fig y_zad_fig y_fig];
 fig_names = ["u","y_zad","y_fig"];
-for i = 1:size(a,2)
+for i = 1:size(figs,2)
     writematrix([figs(i).XData; figs(i).YData]', "p1_zadanie6_PID"+fig_names(i)+".txt", 'Delimiter','tab')
 end
 
