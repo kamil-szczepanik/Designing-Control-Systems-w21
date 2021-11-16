@@ -30,11 +30,11 @@ fprintf("Ręcznie:\n\tK: %0.3f\n\tTi: %0.3f\n\tTd: %0.3f\n", K_pid, Ti_pid, Td_p
 controller = PID(K_pid, Ti_pid, Td_pid, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
 obj = Obj_15Y_p1();
 [~,U_pid_man,Y_pid_man] = systemSim(controller, obj, y_zad, 0.5, SIM_LENGHT+0.5);
-disp(norm(y_zad - Y_pid_man));
+disp(norm(y_zad(200:end) - Y_pid_man(200:end)));
 
 figure()
 hold on
-stairs(y_zad)
+x = stairs(y_zad)
 stairs(Y_pid_zn)
 hold off
 figure()
@@ -49,3 +49,4 @@ hold on
 stairs(y_zad)
 stairs(Y_pid_man)
 hold off
+writematrix([x.XData; x.YData]', "y_zad_pid_test.txt", 'Delimiter','tab')
