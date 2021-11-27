@@ -1,22 +1,12 @@
 clear;
 close all;
-load("data/S_u.mat");
-load("data/S_z.mat");
+load("data/DMC.mat");
 SIM_LENGHT = 500;
 
 y_zad = zeros(SIM_LENGHT*2,1);
 y_zad(200:SIM_LENGHT*2) = 2;
 z_zad = zeros(SIM_LENGHT*2,1);
 z_zad(500:SIM_LENGHT*2) = 1;
-
-D = size(S_u,1);
-lambda = 1;
-N = D;
-Nu = D;
-MV_MIN = -Inf;
-MV_MAX = Inf;
-dMV_MIN = -Inf;
-dMV_MAX = Inf;
 
 controller = DMCz(S_u,S_z, lambda, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
 obj = Obj_15Y_p2();
