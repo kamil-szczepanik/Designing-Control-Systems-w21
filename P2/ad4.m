@@ -11,7 +11,7 @@ y_zad(800:1000) = 2;
 z_zad = 0;
 
 D = size(S_u,1);
-lambda = 5;
+lambda = 1;
 N = D;
 Nu = D;
 MV_MIN = -Inf;
