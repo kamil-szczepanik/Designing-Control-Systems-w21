@@ -1,6 +1,6 @@
 clear;
 close all;
-load("DMC_ad5.mat");
+load("data/S_u.mat");
 SIM_LENGHT = 500;
 
 y_zad = zeros(SIM_LENGHT*2,1);
