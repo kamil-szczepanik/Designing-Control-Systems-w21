@@ -6,8 +6,9 @@ SIM_LENGHT = 500;
 
 y_zad = zeros(SIM_LENGHT*2,1);
 y_zad(200:SIM_LENGHT*2) = 2;
+T = 60;
 z_zad = zeros(SIM_LENGHT*2,1);
-z_zad(500:SIM_LENGHT*2) = 1;
+z_zad(500:SIM_LENGHT*2) = sin(((500:SIM_LENGHT*2) - 500)*2*pi/T);
 
 D = size(S_u,1);
 lambda = 1;
