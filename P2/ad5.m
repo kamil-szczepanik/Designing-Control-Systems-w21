@@ -34,8 +34,8 @@ stairs(Y)
 hold off
 figure()
 hold on
-stairs(U)
 stairs(Uz)
+stairs(U)
 hold off
 figure()
 stairs(z_zad)
