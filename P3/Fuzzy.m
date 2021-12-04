@@ -7,8 +7,8 @@ classdef Fuzzy < handle
     end
     methods
         function o = Fuzzy(weights, controllers)
-            o.weights = weights(:);
-            o.controllers = controllers(:);
+            o.weights = weights;
+            o.controllers = controllers;
             o.length = min(size(o.weights,1),size(o.controllers,1));
         end
         
@@ -17,8 +17,9 @@ classdef Fuzzy < handle
             w = zeros(o.length,1);
             u = w;
             for i = 1:1:o.length
-                w(i) = o.weights(o.u,y);
-                controller = o.controllers(i);
+                weight = o.weights{i};
+                w(i) = weight(o.u,y);
+                controller = o.controllers{i};
                 u(i) = controller(e);
             end
             w = w/sum(w);
