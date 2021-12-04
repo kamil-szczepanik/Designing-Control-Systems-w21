@@ -28,7 +28,7 @@ for p=1:length(U_zad_zmiany)
     hold off
     writematrix([fig.XData; fig.YData]',['txts/ad2_wej_wyj_u_', num2str(p),'.txt'], "Delimiter","tab");
 end
-
+save('data/step_2')
 % Charakterystyka statyczna
 
 Y_stat = zeros(100,1);
