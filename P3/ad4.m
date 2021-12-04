@@ -25,15 +25,17 @@ controller = PID(K, Ti, Td, T, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
 [~, u,y] = systemSim(controller, obj, y_zad,0.5, SIM_LENGTH+0.5);
 figure()
 hold on
-stairs(y_zad);
-stairs(y);
+fig = stairs(y_zad);
+writematrix([fig.XData; fig.YData]','txts/ad4_y_zad.txt', "Delimiter","tab");
+fig = stairs(y);
+writematrix([fig.XData; fig.YData]','txts/ad4_y.txt', "Delimiter","tab");
 hold off
 figure()
 hold on
-stairs(u);
+fig = stairs(u);
+writematrix([fig.XData; fig.YData]','txts/ad4_u.txt', "Delimiter","tab");
 hold off
 save("data/ad4_PID");
-% save("data/model.mat", "Sm", "K", "T1", "T2", "Td");
 function loss = f(params)
     global T MV_MIN MV_MAX dMV_MIN dMV_MAX SIM_LENGTH y_zad
     K = params(1);
