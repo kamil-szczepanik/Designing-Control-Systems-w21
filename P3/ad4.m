@@ -11,8 +11,11 @@ y_zad = zeros(SIM_LENGTH*2,1);
 y_zad(200:400) = 10;
 y_zad(400:600) = 4;
 y_zad(600:800) = -0.1;
-    options = optimoptions(@fminunc,'MaxIterations',1000,'MaxFunctionEvaluations',2000);
-[params,loss] = fminunc(@f,[1,1000,0.1],options);
+
+options = optimoptions(@ga,'MaxGenerations',300,'MaxStallGenerations',200,'PopulationSize', 300);
+params = ga(@f,3,[],[],[],[],[],[],[],[],options);
+%     options = optimoptions(@fminunc,'MaxIterations',1000,'MaxFunctionEvaluations',2000);
+% [params,loss] = fminunc(@f,[1,1000,0.1],options);
 
 K = params(1);
 Ti = params(2);
@@ -29,7 +32,7 @@ figure()
 hold on
 stairs(u);
 hold off
-
+save("data/ad4_PID");
 % save("data/model.mat", "Sm", "K", "T1", "T2", "Td");
 function loss = f(params)
     global T MV_MIN MV_MAX dMV_MIN dMV_MAX SIM_LENGTH y_zad
