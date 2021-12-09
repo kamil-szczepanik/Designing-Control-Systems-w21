@@ -4,19 +4,15 @@ clear;
 addpath('D:\SerialCommunication'); % add a path to the functions
 initSerialControl COM10 % initialise com port
 
-K  = 22.8;
-Ti = 25.6667;
-Td = 6.4167; 
+load("data/DMC_SIM.mat");
 
 y_zad = ones(640,1) * 25;
 y_zad(60:end,:) = 45;
 y_zad(400:end,:) = 30;
 T =1;
-MV_MIN = 0;
-MV_MAX = 100;
 dMV_MIN = -100;
 dMV_MAX = 100;
-controllers = {DMC(S, lambda, N3, Nu3, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)};
+controllers = {DMC(Sm, lambda, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)};
 w1 = trapezoid_weight([-inf,-inf,33,36]);
 weights = { @(u,y) 1};
 controller = Fuzzy(weights, controllers);
