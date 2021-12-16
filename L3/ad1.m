@@ -6,8 +6,8 @@ while(1)
     disp(measurements);
 
     sendControls([1,3], ... send for these elements
-                 [50,0]);  % new corresponding control values
-    sendNonlinearControls(20);  % new corresponding control values
+                 [0,0]);  % new corresponding control values
+    sendNonlinearControls(0);  % new corresponding control values
 
     waitForNewIteration(); % wait for new batch of measurements to be ready
 end
