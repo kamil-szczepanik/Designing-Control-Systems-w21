@@ -12,10 +12,12 @@ y_zad(200:400) = 10;
 y_zad(400:600) = 4;
 y_zad(600:800) = -0.1;
 
-options = optimoptions(@ga,'MaxGenerations',300,'MaxStallGenerations',200,'PopulationSize', 300);
-params = ga(@f,3,[],[],[],[],[],[],[],[],options);
-%     options = optimoptions(@fminunc,'MaxIterations',1000,'MaxFunctionEvaluations',2000);
-% [params,loss] = fminunc(@f,[1,1000,0.1],options);
+options = optimoptions(@ga,'MaxGenerations',300,'PopulationSize',...
+    50,'TimeLimit',300,'MutationFcn', {@mutationadaptfeasible, 0.8, 0.9});
+params = ga(@f,3,[],[],[],[],...
+    [0,0,0],...
+    [1,8,3],...
+    [],[],options);
 
 K = params(1);
 Ti = params(2);
