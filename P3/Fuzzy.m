@@ -23,6 +23,10 @@ classdef Fuzzy < handle
                 u(i) = controller(e);
             end
             w = w/sum(w);
+            if(isnan(w))
+                w(:) = 0;
+                w(end) = 1;
+            end
             o.u = sum(w .* u);
             u = o.u;
         end
