@@ -45,7 +45,7 @@ fig = stairs(u);
 writematrix([fig.XData; fig.YData]','txts/ad6_pid_2_u.txt', "Delimiter","tab");
 hold off
 disp(norm(y_zad-y))
-save("data/ad4_pid_2_ga.mat")
+save("data/ad6_pid_2_ga.mat")
 function loss = f(params)
     global T MV_MIN MV_MAX dMV_MIN dMV_MAX SIM_LENGTH y_zad
     
