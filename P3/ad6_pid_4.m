@@ -19,10 +19,10 @@ params = ga(@f,12,[],[],[],[],...
     [1,8,3,1,8,3,1,8,3,1,8,3],...
     [],[],options);
 
-sig_y1 = bell_weight([-2.0000, -0.6000, 0.8000]);
-sig_y2 = bell_weight([0.8000, 2.2000, 3.6000]);
-sig_y3 = bell_weight([3.6000,5.0000,6.4000]);
-sig_y4 = bell_weight([6.4000,7.8000,9.2000]);
+sig_y1 = bell_weight([1.4, 1, 0.8000]);
+sig_y2 = bell_weight([1.4,1, 3.6000]);
+sig_y3 = bell_weight([1.4,1,6.4000]);
+sig_y4 = bell_weight([1.4,1,9.2000]);
 weights = {@(u,y) sig_y1(y)
             @(u,y) sig_y2(y)
             @(u,y) sig_y3(y)
@@ -55,10 +55,10 @@ save("data/ad6_pid_4_ga.mat")
 function loss = f(params)
     global T MV_MIN MV_MAX dMV_MIN dMV_MAX SIM_LENGTH y_zad
     
-    sig_y1 = bell_weight([-2.0000, -0.6000, 0.8000]);
-    sig_y2 = bell_weight([0.8000, 2.2000, 3.6000]);
-    sig_y3 = bell_weight([3.6000,5.0000,6.4000]);
-    sig_y4 = bell_weight([6.4000,7.8000,9.2000]);
+    sig_y1 = bell_weight([1.4, 1, 0.8000]);
+    sig_y2 = bell_weight([1.4,1, 3.6000]);
+    sig_y3 = bell_weight([1.4,1,6.4000]);
+    sig_y4 = bell_weight([1.4,1,9.2000]);
     weights = {@(u,y) sig_y1(y)
                 @(u,y) sig_y2(y)
                 @(u,y) sig_y3(y)

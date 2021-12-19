@@ -19,8 +19,8 @@ params = ga(@f,6,[],[],[],[],...
     [1,8,3,1,8,3],...
     [],[],options);
 
-sig_y1 = bell_weight([-2,0.3333,2.6667]);
-sig_y2 = bell_weight([2.6667,5,7.3333]);
+sig_y1 = bell_weight([2.3333,1,2.6667]);
+sig_y2 = bell_weight([2.3333,1,7.3333]);
 weights = {@(u,y) sig_y1(y)
             @(u,y) sig_y2(y)};
 
@@ -49,8 +49,8 @@ save("data/ad4_pid_2_ga.mat")
 function loss = f(params)
     global T MV_MIN MV_MAX dMV_MIN dMV_MAX SIM_LENGTH y_zad
     
-    sig_y1 = bell_weight([-2,0.3333,2.6667]);
-    sig_y2 = bell_weight([2.6667,5,7.3333]);
+    sig_y1 = bell_weight([2.3333,1,2.6667]);
+    sig_y2 = bell_weight([2.3333,1,7.3333]);
     weights = {@(u,y) sig_y1(y)
                 @(u,y) sig_y2(y)};
 
