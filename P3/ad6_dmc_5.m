@@ -1,6 +1,6 @@
 clear;
 close all; 
-LAMBDA = 1;
+LAMBDA = [20,1,1,10,20];
 D = 300;
 N1 = 8;
 N2 = 11;
@@ -35,11 +35,11 @@ weights = {@(u,y) sig_y1(y)
             @(u,y) sig_y5(y)};
 
 
-controllers = {DMC(step_response_15(0.1111,1), LAMBDA, N1, Nu1, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.4141,1), LAMBDA, N2, Nu2, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.6162,1), LAMBDA, N3, Nu3, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.7576,1), LAMBDA, N4, Nu4, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.8788,1), LAMBDA, N5, Nu5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)};
+controllers = {DMC(step_response_15(0.1111,1), LAMBDA(1), N1, Nu1, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.4141,1), LAMBDA(2), N2, Nu2, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.6162,1), LAMBDA(3), N3, Nu3, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.7576,1), LAMBDA(4), N4, Nu4, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.8788,1), LAMBDA(5), N5, Nu5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)};
 
 FuzzyDMC = Fuzzy(weights, controllers);         
 obj = Obj_15Y_p3();
@@ -47,23 +47,19 @@ obj = Obj_15Y_p3();
 [~, u,y] = systemSimFuzzy(FuzzyDMC, obj, y_zad,T, SIM_LENGTH+0.5);
 figure(1)
 fig = stairs(y);
-writematrix([fig.XData; fig.YData]','txts/ad6_dmc_5_y.txt', "Delimiter","tab");
 
+figure(1)
+stairs(y, "MarkerSize",10);
 hold on
-fig = stairs(y_zad, "--");
-writematrix([fig.XData; fig.YData]','txts/ad6_dmc_5_yzad.txt', "Delimiter","tab");
-
-hold off
-figure(2)
-fig = stairs(u);
-writematrix([fig.XData; fig.YData]','txts/ad6_dmc_5_u.txt', "Delimiter","tab");
-
+stairs(y_zad, "--");
+figure(2);
+stairs(u);
+hold on
 
 figure(1)
 legend("y","y_zad")
-% matlab2tikz('tex/ad6_dmc_5_y.tex','showInfo', false);
+matlab2tikz('tex/ad7_dmc_5_y.tex','showInfo', false);
 
 figure(2)
-% matlab2tikz('tex/ad6_dmc_5_u.tex','showInfo', false);
+matlab2tikz('tex/ad7_dmc_5_u.tex','showInfo', false);
 disp(norm(y_zad-y))
-% save("data/ad4_pid_2_ga.mat")

@@ -1,6 +1,6 @@
 clear;
 close all; 
-LAMBDA = 1;
+LAMBDA = [30,20,10,1];
 D = 30;
 N1 = 11;
 N2 = 11;
@@ -31,10 +31,10 @@ weights = {@(u,y) sig_y1(y)
             @(u,y) sig_y4(y)};
 
 
-controllers = {DMC(step_response_15(0.2121,1), LAMBDA, N1, Nu1, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.4949,1), LAMBDA, N2, Nu2, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.697,1), LAMBDA, N3, Nu3, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.8586,1), LAMBDA, N4, Nu4, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)};
+controllers = {DMC(step_response_15(0.2121,1), LAMBDA(1), N1, Nu1, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.4949,1), LAMBDA(2), N2, Nu2, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.697,1), LAMBDA(3), N3, Nu3, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.8586,1), LAMBDA(4), N4, Nu4, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)};
 
 FuzzyDMC = Fuzzy(weights, controllers);         
 obj = Obj_15Y_p3();
@@ -43,23 +43,19 @@ obj = Obj_15Y_p3();
 
 figure(1)
 fig = stairs(y);
-writematrix([fig.XData; fig.YData]','txts/ad6_dmc_4_y.txt', "Delimiter","tab");
 
+figure(1)
+stairs(y, "MarkerSize",10);
 hold on
-fig = stairs(y_zad, "--");
-writematrix([fig.XData; fig.YData]','txts/ad6_dmc_4_yzad.txt', "Delimiter","tab");
-
-hold off
-figure(2)
-fig = stairs(u);
-writematrix([fig.XData; fig.YData]','txts/ad6_dmc_4_u.txt', "Delimiter","tab");
-
+stairs(y_zad, "--");
+figure(2);
+stairs(u);
+hold on
 
 figure(1)
 legend("y","y_zad")
-% matlab2tikz('tex/ad6_dmc_4_y.tex','showInfo', false);
+matlab2tikz('tex/ad7_dmc_4_y.tex','showInfo', false);
 
 figure(2)
-% matlab2tikz('tex/ad6_dmc_4_u.tex','showInfo', false);
+matlab2tikz('tex/ad7_dmc_4_u.tex','showInfo', false);
 disp(norm(y_zad-y))
-% save("data/ad4_pid_2_ga.mat")
