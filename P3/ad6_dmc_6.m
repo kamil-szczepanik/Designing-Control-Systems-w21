@@ -2,8 +2,18 @@ clear;
 % close all; 
 LAMBDA = 1;
 D = 301;
-N = D;
-Nu = D;
+N1 = 21;
+N2 = 14;
+N3 = 15;
+N4 = 11;
+N5 = 9;
+N6 = 11;
+Nu1 = 2;
+Nu2 = 2;
+Nu3 = 4;
+Nu4 = 2;
+Nu5 = 3;
+Nu6 = 2;
 T = 0.5;
 MV_MIN = -1;
 MV_MAX = 1;
@@ -29,24 +39,29 @@ weights = {@(u,y) sig_y1(y)
             @(u,y) sig_y6(y)};
 
 
-controllers = {DMC(step_response_15(-0.0505,1), LAMBDA, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.3535,1), LAMBDA, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.5354,1), LAMBDA, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.6768,1), LAMBDA, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.798,1), LAMBDA, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
-               DMC(step_response_15(0.899,1), LAMBDA, N, Nu, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)};
+controllers = {DMC(step_response_15(-0.0505,1), LAMBDA, N1, Nu1, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.3535,1), LAMBDA, N2, Nu2, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.5354,1), LAMBDA, N3, Nu3, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.6768,1), LAMBDA, N4, Nu4, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.798,1), LAMBDA, N5, Nu5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)
+               DMC(step_response_15(0.899,1), LAMBDA, N6, Nu6, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX)};
 
 FuzzyDMC = Fuzzy(weights, controllers);         
 obj = Obj_15Y_p3();
 
 [~, u,y] = systemSimFuzzy(FuzzyDMC, obj, y_zad,T, SIM_LENGTH+0.5);
-
 figure(1)
-stairs(y_zad, "--");
+fig = stairs(y);
+writematrix([fig.XData; fig.YData]','txts/ad6_dmc_6_y.txt', "Delimiter","tab");
+
 hold on
-stairs(y);
+fig = stairs(y_zad, "--");
+writematrix([fig.XData; fig.YData]','txts/ad6_dmc_6_yzad.txt', "Delimiter","tab");
+
 hold off
-% figure(2)
-% stairs(u);
+figure(2)
+fig = stairs(u);
+writematrix([fig.XData; fig.YData]','txts/ad6_dmc_6_u.txt', "Delimiter","tab");
+
 disp(norm(y_zad-y))
 % save("data/ad4_pid_2_ga.mat")
