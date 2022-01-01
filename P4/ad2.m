@@ -44,3 +44,16 @@ writematrix([fig.XData; fig.YData]', 'txts/ad2_u4_y2.txt', "Delimiter","tab");
 figure()
 fig = stairs(S4(:,3));
 writematrix([fig.XData; fig.YData]', 'txts/ad2_u4_y3.txt', "Delimiter","tab");
+
+S1 = S1';
+S2 = S2';
+S3 = S3';
+S4 = S4';
+S1 = S1(:);
+S2 = S2(:);
+S3 = S3(:);
+S4 = S4(:);
+S = [S1,S2,S3,S4];
+S = reshape(S,3,[],4);
+S = permute(S,[2,1,3]);
+save("data/model","S");
