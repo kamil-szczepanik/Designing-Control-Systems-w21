@@ -1,14 +1,22 @@
 function S = step_response_15(U_pp, U_zad)
     sim_lenght = 400;
     step_moment = 100;
-    Y = zeros(sim_lenght,1);
-    U = zeros(sim_lenght,1);
-    U(:) = U_pp;
-    U(step_moment:end) = U_zad;
-    for k=30:sim_lenght
-        Y(k) = symulacja_obiektu15y_p3(U(k-5), ...
-        U(k-6),Y(k-1), Y(k-2));
+    U_pp = U_pp(:)';
+    U_zad = U_zad(:)';
+    Y = zeros(sim_lenght,3);
+    U = zeros(sim_lenght,4);
+    U(1:step_moment-1,:) = U(1:step_moment-1,:) + U_pp;
+    U(step_moment:end,:) = U(step_moment:end,:) + U_zad;
+    for k=5:sim_lenght
+        [Y(k,1),Y(k,2),Y(k,3)] = symulacja_obiektu15_p4( ...
+            U(k-1,1), U(k-2,1), U(k-3,1), U(k-4,1), ...
+            U(k-1,2), U(k-2,2), U(k-3,2), U(k-4,2), ...
+            U(k-1,3), U(k-2,3), U(k-3,3), U(k-4,3), ...
+            U(k-1,4), U(k-2,4), U(k-3,4), U(k-4,4), ...
+            Y(k-1,1), Y(k-2,1), Y(k-3,1), Y(k-4,1), ...
+            Y(k-1,2), Y(k-2,2), Y(k-3,2), Y(k-4,2), ...
+            Y(k-1,3), Y(k-2,3), Y(k-3,3), Y(k-4,3));
     end
-    S = Y(step_moment:end);
-    S = (S-S(1))/(U_zad-U_pp);
+    S = Y(step_moment:end,:);
+%     S = (S-S(1,:))./(U_zad-U_pp);
 end
