@@ -1,5 +1,5 @@
 % Symulator uk³adu
-function [t, u1, u2, u3, u4, y1, y2, y3] = systemSim(controller, object, Y_ZAD, Tp, Tfinal)
+function [t, U, Y] = systemSim(controller, object, Y_ZAD, Tp, Tfinal)
     %u = controller(y_zad, y)
     %y = object(u)
     t = (0:Tp:Tfinal-1)';
@@ -30,7 +30,7 @@ function [t, u1, u2, u3, u4, y1, y2, y3] = systemSim(controller, object, Y_ZAD, 
     
 
     for k = 1:1:size(t,1)-1
-        u1(k) = controller(y_zad1(k) - y1(k));
+        u1(k) = controller(y_zad3(k) - y3(k));
         u2(k) = controller(y_zad2(k) - y2(k));
         u3(k) = controller(y_zad3(k) - y3(k));
         u4(k) = 0;
@@ -41,7 +41,6 @@ function [t, u1, u2, u3, u4, y1, y2, y3] = systemSim(controller, object, Y_ZAD, 
         y2(k+1) = Y(k+1,2);
         y3(k+1)= Y(k+1,3);
 
-%         Y(k) = [y1(k), y2(k), y3(k)];
 %         clc;
 %         fprintf("t: %0.2f\ny_zad: %0.2f\nu: %0.2f\ny: %0.2f\nz: %0.2f",t(k),y_zad(k),u(k),y(k),z_zad(k))
     end    
