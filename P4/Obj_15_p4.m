@@ -14,7 +14,8 @@ classdef Obj_15_p4 < handle
                 o.Y(1,1), o.Y(2,1), o.Y(3,1), o.Y(4,1), ...
                 o.Y(1,2), o.Y(2,2), o.Y(3,2), o.Y(4,2), ...
                 o.Y(1,3), o.Y(2,3), o.Y(3,3), o.Y(4,3));
-            o.U = [u(:)', o.U(1:end-1,:)];
+
+            o.U = [u(:)'; o.U(1:end-1,:)];
             o.Y = [y; o.Y(1:end-1,:)];
         end
         function y = subsref(o,uz)
