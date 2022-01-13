@@ -111,8 +111,10 @@ classdef DMC < handle
             % wykorzystywane w liczeniu sterowania.
             K = obj.K(1:obj.nu,:);
             KMp = K*Mp;
-            obj.K = K;
+            K = [sum(K(:,1:2:end),2),sum(K(:,2:2:end),2)];
+            
             obj.KMp = KMp;
+            obj.K = K;
         end
         
         % Metoda zwracająca sterowanie na kolejną iterację
@@ -121,7 +123,7 @@ classdef DMC < handle
             
             % Policzenie przyrostu sterowania na aktualną iterację 
             % oraz przesunięcie historii;
-            o.dU = [ sum(o.K .* e(:),2) - o.KMp * o.dU
+            o.dU = [ sum(o.K * e(:),2) - o.KMp * o.dU
                         o.dU(1,1:end-o.nu)];
                     
             % Nałożenie ograniczeń na przyrosty sterowania
