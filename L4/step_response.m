@@ -1,4 +1,4 @@
-function Sp = step_response(y1_1, y2_1, y1_2, y2_2, step_u1, step_u2)
+function S = step_response(y1_1, y2_1, y1_2, y2_2, step_u1, step_u2)
     D = min(size(y1_1,1), size(y1_2,1));
     for i=1:D
         if step_u1(i) ~= step_u1(1)
@@ -44,6 +44,13 @@ function Sp = step_response(y1_1, y2_1, y1_2, y2_2, step_u1, step_u2)
     subplot(2,2,4)
     plot(Sp_22)
     legend('Sp_22')
-
-    Sp = [ Sp_11 Sp_12 ; Sp_21 Sp_22 ] ;
+    S1 = [Sp_11 Sp_21];
+    S2 = [Sp_12 Sp_22];
+    S1 = S1';
+    S2 = S2';
+    S1 = S1(:);
+    S2 = S2(:);
+    S = [S1,S2];
+    S = reshape(S,2,[],2);
+    S = permute(S,[2,1,3]);
 end
