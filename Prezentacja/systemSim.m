@@ -1,5 +1,5 @@
 % Symulator uk³adu
-function [t, u,y] = systemSim(controller, object, y_zad, Tp, Tfinal)
+function [t, u,y] = systemSim(controller, object, y_zad, Tp, Tfinal, white_noise)
     %u = controller(y_zad, y)
     %y = object(u)
     t = (0:Tp:Tfinal-1)';
@@ -14,6 +14,7 @@ function [t, u,y] = systemSim(controller, object, y_zad, Tp, Tfinal)
         u(k) = controller(y_zad(k) - y(k));
         
         y(k+1) = object(u(k)); % + szum
+        if white_noise; y(k+1) = y(k+1) + wgn(1,1,-40); end
         %clc;
         %fprintf("t: %0.2f\ny_zad: %0.2f\nu: %0.2f\ny: %0.2f",t(k),y_zad(k),u(k),y(k))
     end    

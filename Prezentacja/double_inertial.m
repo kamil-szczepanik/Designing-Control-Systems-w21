@@ -1,4 +1,4 @@
-function obj = double_inertial(K,Td,T1,T2,Y0,freq)
+function obj = double_inertial(K, Td, T1, T2, Y0, freq_noise)
     if nargin < 5
         Y0 = 0;
     end
@@ -12,5 +12,5 @@ function obj = double_inertial(K,Td,T1,T2,Y0,freq)
     b(Td+1) = b1;
     b(Td+2) = b2;
     a = [-a1;-a2];
-    obj = Obj(b,a,Y0,freq);    
+    obj = Obj(b,a,Y0,freq_noise);    
 end
