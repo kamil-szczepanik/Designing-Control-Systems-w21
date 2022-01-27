@@ -33,17 +33,31 @@ function S = step_response(y1_1, y2_1, y1_2, y2_2, step_u1, step_u2)
     
     figure(1)
     subplot(2,2,1)
-    plot(Sp_11)
+    stairs(Sp_11)
     legend('Sp_11')
+    fig = stairs(Sp_11);
+    writematrix([fig.XData; fig.YData]','txts/ad4_Sp_11.txt', "Delimiter","tab");
+
+    
     subplot(2,2,2)
-    plot(Sp_21)
+    stairs(Sp_21)
     legend('Sp_21')
+    fig = stairs(Sp_21);
+    writematrix([fig.XData; fig.YData]','txts/ad4_Sp_21.txt', "Delimiter","tab");
+    
     subplot(2,2,3)
-    plot(Sp_12)
+    stairs(Sp_12)
     legend('Sp_12')
+    fig = stairs(Sp_12);
+    writematrix([fig.XData; fig.YData]','txts/ad4_Sp_12.txt', "Delimiter","tab");
+    
     subplot(2,2,4)
-    plot(Sp_22)
+    stairs(Sp_22)
     legend('Sp_22')
+    fig = stairs(Sp_22);
+    writematrix([fig.XData; fig.YData]','txts/ad4_Sp_22.txt', "Delimiter","tab");
+     
+    
     S1 = [Sp_11 Sp_21];
     S2 = [Sp_12 Sp_22];
     S1 = S1';
