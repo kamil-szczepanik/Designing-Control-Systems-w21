@@ -23,7 +23,7 @@ classdef Obj < handle
             
         end
         function y = step(o, u)
-            if o.freq ~= 0
+            if o.freq >= 0
                 u = u + 0.1*sin(o.sin_linspace(mod(o.counter,o.freq)+1));
             end
             
@@ -32,8 +32,11 @@ classdef Obj < handle
             o.U = [u, o.U(1:end-1)];
             o.Y = [y, o.Y(1:end-1)];
             y = y + o.c;
-%             y = sin(o.sin_linspace(mod(o.counter,o.freq)+1)); % uncoment to
-%             test noise
+%             if o.freq >= 0
+%                 y = 0.1*sin(o.sin_linspace(mod(o.counter,o.freq)+1)); % uncoment to
+% %             test noise
+%             end
+            
         end
         function y = subsref(o,u)
             y = o.step(u.subs{:});
