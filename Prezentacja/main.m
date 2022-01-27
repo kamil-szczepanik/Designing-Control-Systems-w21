@@ -40,9 +40,23 @@ function loss = f(params)
     Ti_pid=params(2);
     Td_pid=params(3);
 
-    controller = PID(K_pid, Ti_pid, Td_pid, T, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
-    obj = double_inertial(K, Td, T1, T2, Y0, freq_noise);
-    y_zad = ones(600,1)*0.7;
-    [~, u,y] = systemSim(controller, obj, y_zad, 1, 600, white_noise); % @(x)1
-    loss = norm(y_zad-y) 
+    controller1 = PID(K_pid, Ti_pid, Td_pid, T, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+    obj1 = double_inertial(K, Td, T1, T2, Y0, freq_noise);
+    y_zad = ones(600,1)*0.9;
+    [~, u,y] = systemSim(controller1, obj1, y_zad, 1, 600, white_noise); % @(x)1
+    loss1 = norm(y_zad-y);
+    
+    controller2 = PID(K_pid, Ti_pid, Td_pid, T, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+    obj2 = double_inertial(K, Td, T1, T2, Y0, freq_noise);
+    y_zad = ones(600,1)*0.5;
+    [~, u,y] = systemSim(controller2, obj2, y_zad, 1, 600, white_noise); % @(x)1
+    loss2 = norm(y_zad-y);
+    
+    controller3 = PID(K_pid, Ti_pid, Td_pid, T, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+    obj3 = double_inertial(K, Td, T1, T2, Y0, freq_noise);
+    y_zad = ones(600,1)*0.2;
+    [~, u,y] = systemSim(controller3, obj3, y_zad, 1, 600, white_noise); % @(x)1
+    loss3 = norm(y_zad-y);
+    
+    loss = loss1 + loss2 + loss3
 end
