@@ -15,9 +15,9 @@ y_zad(800:end,:) = 3;
 
 K_y_u = squeeze(S(end,:,:)); % Macierz wzmocnień statycznych
 A = K_y_u\eye(3); 
-pid_y1 =  PID(4, 6, 0.2, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
-pid_y2 =  PID(5, 2.5, 0.25, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
-pid_y3 =  PID(2, 1.75, 0.25, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+pid_y1 =  PID(1.5, 11, 0.2, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+pid_y2 =  PID(6, 3, 0.1, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
+pid_y3 =  PID(1, 2, 0.3, 0.5, MV_MIN, MV_MAX, dMV_MIN, dMV_MAX);
 controller = @(e) (A * [ pid_y1(e(1));pid_y2(e(2));pid_y3(e(3))])';
 obj = Obj_15_p4();
 [~, u,y] = systemSim4_3(controller, obj, y_zad,0.5, SIM_LENGTH+0.5);
