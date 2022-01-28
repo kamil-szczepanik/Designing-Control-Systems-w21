@@ -140,7 +140,7 @@ classdef DMC < handle
             % Obliczenie aktualnego sterowania
             o.MV = o.dU(1:o.nu) + o.MV;
             
-            MV = o.MV;
+            MV = o.MV';
         end 
         
         % Metoda specjalna, pozwalająca wywołać metodę step, 
